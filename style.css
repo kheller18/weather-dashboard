@@ -21,21 +21,36 @@ header {
 
 span {
     display: inline-block;
-    line-height: normal;
+    height: 75px;
     vertical-align: middle;
-    width: 100%;
+    
 }
 
-.searchButton {
-    width: 40px;
+.form {
+    margin-top: 10px;
+}
+
+
+#searchCity {
+    width: 80%;
     height: 40px;
+    margin-bottom: 15px;
+    margin-left: 15px
+    
+    
+}
+.searchButton {
+   
     border: 1px solid blue;
     background-color: blue !important;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
-    font-size: 10px;
+    
+    width: 10%;
+    height: 40px;
+    
 
 }
 
@@ -47,11 +62,7 @@ span {
     margin-bottom: 10px;
 }
 
-#searchCity {
-    width: 80%;
-    height: 40px;
-    margin-bottom: 15px;
-}
+
 
 #search-History {
     margin-top: 15px;
@@ -93,11 +104,14 @@ span {
 li {
     list-style-type: none;
     border-bottom: 1px lightgray solid;
-    height: 40px;
-    padding-left: 5px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
     background-color: white;
     vertical-align: middle;
     cursor: pointer;
+    
+    
 }  
 
 

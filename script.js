@@ -42,13 +42,11 @@ $(document).ready(function() {
         }
     ]   
         
-    
-    
+    // app gets kicked off here    
     displayLastCity();
     renderCities();
 
     function generateWeatherData(city) {
-        //city = $("#searchCity").val();
         if (city != null || city != undefined|| city != "") {               
             fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
                 .then(function (response) {
@@ -95,16 +93,12 @@ $(document).ready(function() {
         }
         for (var i = cities.length - 1; i >= 0; i--) {
             var a = $("<li>");
-            var b = $("<button>");
             a.addClass("priorSearches");
             a.attr('id', i);
             a.attr('value', cities[i]);
             a.text(cities[i])
-            //b.html(`<li> ${ cities[i] } </li>`)
             $(".search-History").append(a);
         }
-      //  x = $(".priorSearches");
-     //   x.addEventListener()
     }
 
     function cityUpperCase(city) {
@@ -114,7 +108,6 @@ $(document).ready(function() {
     }
 
     function storeCities(city) {
-        //city.toLowerCase();
         console.log(city)
         city = cityUpperCase(city);
         if (JSON.parse(localStorage.getItem("cities")) != null) {
@@ -131,22 +124,13 @@ $(document).ready(function() {
             lastCity = cities[cities.length - 1];
             generateWeatherData(lastCity);
         }
-        
-
     }
-
-   // function cityUpperCase(city) {
-     //   return city.replace(/\w\S*/g, function(txt){
-       //     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      //  });
-   // }
 
     function getForecast (today, iconID, uv, forecast) {
         forecastCounter = 0;
         console.log(today);
         console.log(iconID);
         console.log(uv);
-        //console.log(forecast);
         tempDate = formatDate(uv.date_iso);
         temp = convertTemp(today.main.temp);
         $(".city").html(`<h2>${ today.name } (${ tempDate }) <img src=${ iconID.url } /></h2>`);
@@ -196,6 +180,10 @@ $(document).ready(function() {
         return day+'/'+month+'/'+year;
     }
 
+    function styleUV() {
+        
+    }
+
     function convertTemp (temperature) {
         temperature = (((temperature - 273.15) * 1.8) + 32).toFixed(0);
         return temperature;
@@ -227,11 +215,11 @@ $(document).ready(function() {
         
         console.log(event);
         city = event.target.attributes[2].nodeValue;
-        console.log(city);
+        //console.log(city);
         //city = $(this);
         storeCities(city);
         generateWeatherData(city);
-        console.log(city);
+        //console.log(city);
         console.log("hey");
         
     });
