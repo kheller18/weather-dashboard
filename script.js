@@ -3,21 +3,50 @@ $(document).ready(function() {
     var city;
     var temp;
     var weatherTemp;
-    var icons = [];
     var apiKey = "54ea5276d8943e943c85e5932fdd782a";
     var cities = [];
     var today, icon, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate;
-    var forecastData = [];
-
+    var date, forecastIcon, temperature, humidity;
+    let forecastCounter = 0;
+    let forecastTags = ["#forecast-1", "#forecast-2", "#forecast-3", "#forecast-4", "#forecast-5"]
+    let forecastData = [
+        {
+            date,
+            forecastIcon,
+            temperature,
+            humidity
+        }, 
+        {
+            date,
+            forecastIcon,
+            temperature,
+            humidity
+        }, 
+        {
+            date,
+            forecastIcon,
+            temperature,
+            humidity
+        }, 
+        {
+            date,
+            forecastIcon,
+            temperature,
+            humidity
+        }, 
+        {
+            date,
+            forecastIcon,
+            temperature,
+            humidity
+        }
+    ]   
+        
+    
+    console.log(forecastData);
     displayLastCity();
     renderCities();
-/* model array 
 
-
-
-
-
-*/
     function generateWeatherData(city) {
         if (city != null || city != undefined || city != "") {               
             fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
@@ -48,21 +77,8 @@ $(document).ready(function() {
                     console.log(icon);
                     console.log(uv);
                     console.log(forecast);
-                    temp = ((today.main.temp -273.15) * 1.8 + 32).toFixed(1);
-                    tempDate = uv.date_iso;
-                    console.log(tempDate);
-                    tempDate = tempDate.split("T");
-                    tempDate = tempDate[0];
-                    //tempDate.replace('-','/');
-                    console.log(tempDate);
-
                     getForecast(today, icon, uv, forecast);
-
-
-
-                    
                     renderCities();
-
                 }).catch(function (error) {
                     console.log(error);
                 });  
@@ -103,12 +119,6 @@ $(document).ready(function() {
 
     }
 
-    //function formatDate() {
-
-    //}
-
-    
-
     function cityUpperCase(city) {
         return city.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -121,9 +131,8 @@ $(document).ready(function() {
         console.log(icon);
         console.log(uv);
         console.log(forecast);
-
-         
-
+        tempDate = formatDate(uv.date_iso);
+        temp = convertTemp(today.main.temp);
         $(".city").html(`<h2>${ today.name } (${ tempDate }) <img src=${ icon.url } /></h2>`);
         $(".temperature").html(`<p>Temperature: ${ temp } F</p>`);
         $(".humidity").html(`<p>Humidity: ${ today.main.humidity }%</p>`);
@@ -131,30 +140,47 @@ $(document).ready(function() {
         $(".uvIndex").html(`<p>UV Index: ${ uv.value }</p>`);
 
         for (i = 0; i < forecast.list.length - 1; i++) {
-            console.log("hello")
+            if (forecast.list[i].dt_txt.includes("15:00:00")) {
+                
+                forecastData[forecastCounter].date = formatDate(forecast.list[i].dt_txt);
+                forecastData[forecastCounter].forecastIcon = getIcon(forecast.list[i].weather[0].icon);
+                forecastData[forecastCounter].temperature = convertTemp(forecast.list[i].main.temp);
+                forecastData[forecastCounter].humidity = forecast.list[i].main.humidity;
+                $(forecastTags[forecastCounter]).html((`<h6> ${ forecastData[forecastCounter].date }  </h6>`));
+                $(forecastTags[forecastCounter]).append(`<p><img src=${ forecastData[forecastCounter].forecastIcon } /></p>`);
+                $(forecastTags[forecastCounter]).append(`<p>Temp: ${ forecastData[forecastCounter].temperature } &#176;F</p>`);
+                $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
+                forecastCounter++;
+            }
         }
-
-        $("#forecast-1").html((`<h6> ${ forecast.list[0].dt_txt }  </h6>`));
-        $("#forecast-1").append(`<p> ${ forecast.list[0].main.temp} F</p>`);
-        $("#forecast-1").append(`<p>Temp: ${ forecast.list[0].main.temp} F</p>`);
-        $("#forecast-1").append(`<p>Humidity: ${ forecast.list[0].main.humidity}%</p>`);
-        $("#forecast-2").html((`<h6> ${ forecast.list[8].dt_txt }  </h6>`));
-        $("#forecast-2").append(`<p>Temp: ${ forecast.list[8].main.temp} F</p>`);
-        $("#forecast-2").append(`<p>Humidity: ${ forecast.list[8].main.humidity}%</p>`);
-        $("#forecast-3").html((`<h6> ${ forecast.list[16].dt_txt }  </h6>`));
-        $("#forecast-3").append(`<p>Temp: ${ forecast.list[16].main.temp} F</p>`);
-        $("#forecast-3").append(`<p>Humidity: ${ forecast.list[16].main.humidity}%</p>`);
-        $("#forecast-4").html((`<h6> ${ forecast.list[24].dt_txt }  </h6>`));
-        $("#forecast-4").append(`<p>Temp: ${ forecast.list[24].main.temp} F</p>`);
-        $("#forecast-4").append(`<p>Humidity: ${ forecast.list[24].main.humidity}%</p>`);
-        $("#forecast-5").html((`<h6> ${ forecast.list[32].dt_txt }  </h6>`));
-        $("#forecast-5").append(`<p>Temp: ${ forecast.list[32].main.temp} F</p>`);
-        $("#forecast-5").append(`<p>Humidity: ${ forecast.list[32].main.humidity}%</p>`);
+        console.log(forecastData);
     }
 
-    //function getIcons() {
+    function getIcon(icon) {
+        url = `http://openweathermap.org/img/wn/${ icon }@2x.png`;
+        return url;
+    }
 
-    //}
+    function formatDate(newDate) {
+        //newDate = uv.date_iso;
+        if (newDate.includes('T')) {
+            newDate = newDate.split('T');
+            newDate = newDate[0];
+        } else {
+            newDate = newDate.split(" ");
+            newDate = newDate[0];
+        }
+        newDate = newDate.match(/\d+/g),
+        year = newDate[0].substring(2), // get only two digits
+        day = newDate[1], month = newDate[2];
+
+        return day+'/'+month+'/'+year;
+    }
+
+    function convertTemp (temperature) {
+        temperature = ((temperature - 273.15) * 1.8 + 32).toFixed(0);
+        return temperature;
+    }
 
     $("form").submit(function(e) {
         e.preventDefault();
@@ -163,7 +189,7 @@ $(document).ready(function() {
         generateWeatherData(city);
     });
 
-    async function fetchCity(city) {
+   /* async function fetchCity(city) {
         const response = await fetch("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=54ea5276d8943e943c85e5932fdd782a")
         const data = await response.json()
         return data;
@@ -173,7 +199,7 @@ $(document).ready(function() {
         const response = await fetch("http://openweathermap.org/img/wn/" + wpic + "@2x.png")
         const data = await response
         return data;
-    }
+     } */
                     
        
     
