@@ -23,18 +23,19 @@ span {
     display: inline-block;
     line-height: normal;
     vertical-align: middle;
+    width: 100%;
 }
 
 .searchButton {
     width: 40px;
-    height: 50px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
+    height: 40px;
+    border: 1px solid blue;
+    background-color: blue !important;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 10px;
 
 }
 
@@ -46,11 +47,23 @@ span {
     margin-bottom: 10px;
 }
 
+#searchCity {
+    width: 80%;
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+#search-History {
+    margin-top: 15px;
+    border: 1px lightgray solid;
+}
+
 #forecast {
     display: flex;
     padding-left: 5px;
     padding-top: 10px;
     margin-bottom: 10px;
+    width: fit-content;
 }
 
 .cards {
@@ -79,13 +92,15 @@ span {
 
 li {
     list-style-type: none;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    border-bottom: 1px lightgray solid;
     height: 40px;
     padding-left: 5px;
     background-color: white;
     vertical-align: middle;
+    cursor: pointer;
 }  
+
+
 
 #allCities {
     background-color: lightgray;
