@@ -14,6 +14,11 @@ header {
     font-size: 30px;
 }
 
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 span {
     display: inline-block;
     line-height: normal;
@@ -35,4 +40,52 @@ span {
 
 .dailyOverview {
     border: 2px black solid;
+    height: 300px;
+    padding: 5px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+}
+
+#forecast {
+    display: flex;
+    padding-left: 5px;
+    padding-top: 10px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+    width: 100px;
+}
+
+
+.card {
+    text-align: left !important;
+    background-color: blue !important;
+    color: white;
+    margin: 10px;
+    margin-bottom: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 5px;
+    text-align: center;
+    background-color: #f1f1f1;
+    width: 130px;
+    height: 200px;
+     
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    height: 40px;
+    padding-left: 5px;
+    background-color: white;
+    vertical-align: middle;
+}  
+
+#allCities {
+    background-color: lightgray;
 }
