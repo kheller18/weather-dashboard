@@ -1,12 +1,15 @@
 // making sure html is loaded first
 $(document).ready(function() {
     var city;
+    var cityVal;
     var temp;
+    var iconURL;
     var weatherTemp;
     var apiKey = "54ea5276d8943e943c85e5932fdd782a";
     var cities = [];
-    var today, iconID, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate, val, uvTemp;
+    var today, iconID, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate, uvTemp;
     var date, forecastIcon, temperature, humidity;
+    var currDate;
     let forecastCounter = 0;
     let forecastTags = ["#forecast-1", "#forecast-2", "#forecast-3", "#forecast-4", "#forecast-5"]
     let forecastData = [
@@ -52,31 +55,16 @@ $(document).ready(function() {
                 .then(function (response) {
                     return response.json();
                 }).then(function (data) {
-                    weatherTemp = data.weather[0].icon
-                    today = data;
-                    return fetch(`http://openweathermap.org/img/wn/${ weatherTemp }@2x.png`);
-                }).then(function (response) {
-                    return response;
-                }).then(function (data) {
-                    iconID = data;
-                    console.log(iconID);
-                    lat =  today.coord.lat;
-                    long = today.coord.lon;
-                    return fetch(`http://api.openweathermap.org/data/2.5/uvi?appid=${ apiKey }&lat=${ lat }&lon=${ long }`)
+                    cityVal = data;
+                    weatherTemp = data.weather[0].icon;
+                    lat =  data.coord.lat;
+                    long = data.coord.lon;
+                    return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${ lat }&lon=${ long }&exclude=minutely&appid=${ apiKey }`)
                 }).then(function (response) {
                     return response.json()
                 }).then(function (data) {
-                    uv = data;
-                    return fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${ city }&appid=${ apiKey }`)
-                }).then(function (response) {
-                    return response.json()
-                }).then (function (data) {
                     forecast = data;
-                    console.log(today);
-                    console.log(iconID);
-                    console.log(uv);
-                    console.log(forecast);
-                    getForecast(today, iconID, uv, forecast);
+                    getForecast(cityVal, forecast);
                     renderCities();
                 }).catch(function (error) {
                     console.log(error);
@@ -92,12 +80,12 @@ $(document).ready(function() {
             cities = JSON.parse(localStorage.getItem("cities"));
         }
         for (var i = cities.length - 1; i >= 0; i--) {
-            var a = $("<li>");
-            a.addClass("priorSearches");
-            a.attr('id', i);
-            a.attr('value', cities[i]);
-            a.text(cities[i])
-            $(".search-History").append(a);
+            var li = $("<li>");
+            li.addClass("priorSearches");
+            li.attr('id', i);
+            li.attr('value', cities[i]);
+            li.text(cities[i])
+            $(".search-History").append(li);
         }
     }
 
@@ -126,36 +114,42 @@ $(document).ready(function() {
         }
     }
 
-    function getForecast (today, iconID, uv, forecast) {
+    function getForecast (cityVal, forecast) {
         forecastCounter = 0;
-        console.log(today);
-        console.log(iconID);
-        console.log(uv);
-        tempDate = formatDate(uv.date_iso);
-        temp = convertTemp(today.main.temp);
-        uvTemp = uv.value;
+        console.log(cityVal)
+        console.log(forecast)
+      
+        tempDate = forecast.current.dt;
         
-        $(".city").html(`<h2>${ today.name } (${ tempDate }) <img src=${ iconID.url } /></h2>`);
+
+        tempDate = formatDate(tempDate);
+        temp = forecast.current.temp;
+        temp = convertTemp(temp);
+        uvTemp = forecast.current.uvi;
+        iconURL = forecast.current.weather[0].icon;
+        iconURL = getIcon(iconURL)
+        
+        $(".city").html(`<h2>${ cityVal.name } (${ tempDate }) <img src=${ iconURL } /></h2>`);
         $(".temperature").html(`<p>Temperature: ${ temp } &#176;F</p>`);
-        $(".humidity").html(`<p>Humidity: ${ today.main.humidity }%</p>`);
-        $(".windSpeed").html(`<p>Wind Speed: ${ today.wind.speed } MPH</p>`);
+        $(".humidity").html(`<p>Humidity: ${ forecast.current.humidity }%</p>`);
+        $(".windSpeed").html(`<p>Wind Speed: ${ forecast.current.wind_speed } MPH</p>`);
         $(".uvIndex").html(`<p>UV Index: <span id="uvColor">${ uvTemp }</span></p>`);
         styleUV(uvTemp);
 
-        for (i = 0; i < forecast.list.length - 1; i++) {
-            if (forecast.list[i].dt_txt.includes("21:00:00")) {
-                sdate = forecast.list[i].dt_txt;
-                console.log(sdate);
-                forecastData[forecastCounter].date = formatDate(forecast.list[i].dt_txt);
-                forecastData[forecastCounter].forecastIcon = getIcon(forecast.list[i].weather[0].icon);
-                forecastData[forecastCounter].temperature = convertTemp(forecast.list[i].main.temp);
-                forecastData[forecastCounter].humidity = forecast.list[i].main.humidity;
-                $(forecastTags[forecastCounter]).html((`<h6> ${ forecastData[forecastCounter].date }  </h6>`));
-                $(forecastTags[forecastCounter]).append(`<p><img src=${ forecastData[forecastCounter].forecastIcon } /></p>`);
-                $(forecastTags[forecastCounter]).append(`<p>Temp: ${ forecastData[forecastCounter].temperature } &#176;F</p>`);
-                $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
-                forecastCounter++;
-            }
+        for (i = 1; i < forecast.daily.length - 2; i++) {
+            
+            sdate = forecast.daily[i].dt;
+            console.log(sdate);
+            forecastData[forecastCounter].date = formatDate(forecast.daily[i].dt);
+            forecastData[forecastCounter].forecastIcon = getIcon(forecast.daily[i].weather[0].icon);
+            forecastData[forecastCounter].temperature = convertTemp(forecast.daily[i].temp.max);
+            forecastData[forecastCounter].humidity = forecast.daily[i].humidity;
+            $(forecastTags[forecastCounter]).html((`<h6> ${ forecastData[forecastCounter].date }  </h6>`));
+            $(forecastTags[forecastCounter]).append(`<p><img src=${ forecastData[forecastCounter].forecastIcon } /></p>`);
+            $(forecastTags[forecastCounter]).append(`<p>Temp: ${ forecastData[forecastCounter].temperature } &#176;F</p>`);
+            $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
+            forecastCounter++;
+            
         
         }
         console.log(forecastData);
@@ -167,20 +161,11 @@ $(document).ready(function() {
         return url;
     }
 
-    function formatDate(newDate) {
-        //newDate = uv.date_iso;
-        if (newDate.includes('T')) {
-            newDate = newDate.split('T');
-            newDate = newDate[0];
-        } else {
-            newDate = newDate.split(" ");
-            newDate = newDate[0];
-        }
-        newDate = newDate.match(/\d+/g),
-        year = newDate[0].substring(2), // get only two digits
-        day = newDate[1], month = newDate[2];
-
-        return day+'/'+month+'/'+year;
+    function formatDate(tempDate) {
+        tempDate = (new Date(tempDate * 1000)).toLocaleString();
+        tempDate = tempDate.split(",");
+        tempDate = tempDate[0];
+        return tempDate;
     }
 
     function styleUV(value) {
@@ -204,6 +189,18 @@ $(document).ready(function() {
         return temperature;
     }
 
+    function convertUTCToLocal(utcDate) {
+        console.log(utcDate);
+        var newDate = new Date(utcDate.getTime()+utcDate.getTimezoneOffset()*60*1000);
+
+        var offset = utcDate.getTimezoneOffset() / 60;
+        var hours = utcDate.getHours();
+
+        newDate.setHours(hours - offset);
+        console.log(newDate);
+        return newDate;
+    }
+
     async function validateCity(location) {
         const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ location }&appid=${ apiKey }`)
         const data = await response.json()
@@ -216,8 +213,6 @@ $(document).ready(function() {
             console.log("didn't work")
         }
     }
-
-    
 
     $("form").submit(function(e) {
         e.preventDefault();
