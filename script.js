@@ -129,7 +129,7 @@ $(document).ready(function() {
         iconURL = forecast.current.weather[0].icon;
         iconURL = getIcon(iconURL)
         
-        $(".city").html(`<h2>${ cityVal.name } (${ tempDate }) <img src=${ iconURL } /></h2>`);
+        $(".city").html(`<h3>${ cityVal.name } (${ tempDate })<img src=${ iconURL } class="currentImg"/></h3>`);
         $(".temperature").html(`<p>Temperature: ${ temp } &#176;F</p>`);
         $(".humidity").html(`<p>Humidity: ${ forecast.current.humidity }%</p>`);
         $(".windSpeed").html(`<p>Wind Speed: ${ forecast.current.wind_speed } MPH</p>`);
@@ -144,8 +144,8 @@ $(document).ready(function() {
             forecastData[forecastCounter].forecastIcon = getIcon(forecast.daily[i].weather[0].icon);
             forecastData[forecastCounter].temperature = convertTemp(forecast.daily[i].temp.max);
             forecastData[forecastCounter].humidity = forecast.daily[i].humidity;
-            $(forecastTags[forecastCounter]).html((`<h6> ${ forecastData[forecastCounter].date }  </h6>`));
-            $(forecastTags[forecastCounter]).append(`<p><img src=${ forecastData[forecastCounter].forecastIcon } /></p>`);
+            $(forecastTags[forecastCounter]).html((`<h6>${ forecastData[forecastCounter].date }</h6>`));
+            $(forecastTags[forecastCounter]).append(`<img src=${ forecastData[forecastCounter].forecastIcon } class="forecastImg" />`);
             $(forecastTags[forecastCounter]).append(`<p>Temp: ${ forecastData[forecastCounter].temperature } &#176;F</p>`);
             $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
             forecastCounter++;

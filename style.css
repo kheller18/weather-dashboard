@@ -3,9 +3,14 @@
     padding: 0;
 }
 
+*,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+body {
+    width: 100%;
 }
 
 header {
@@ -13,36 +18,57 @@ header {
     line-height: 75px;
     background-color: black;
     color: white;
-    width: 100%;
-    text-align: center;
+    
+    
     font-weight: bold;
     font-size: 30px;
+    
+}
+
+.headerText {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    background-color: black;
+}
+
+h6 {
+    margin: 0px 0px 0px 0px;
 }
 
 .container {
     padding-left: 0px;
     padding-right: 0px;
+    width: 100%;
 }
 
 .heading {
     display: inline-block;
     height: 75px;
     vertical-align: middle;
+    width: 100;
     
 }
 
 .form {
     margin-top: 10px;
+    width: 100%;
 }
 
 
 #searchCity {
-    width: 80%;
+    width: 85%;
     height: 40px;
     margin-bottom: 15px;
-    margin-left: 15px;
     
     
+    
+}
+
+#weather {
+    width: 65%;
+   
+    padding: 0px 25px 0px 25px;
 }
 
 #uvColor {
@@ -86,7 +112,7 @@ header {
     border-radius: 0 5px 5px 0;
     cursor: pointer;
     
-    width: 10%;
+    width: 15%;
     height: 40px;
 }
 
@@ -98,6 +124,7 @@ header {
     content: " ";
     display: block;
     clear: both;
+    border: none;
 }
 
 .searchButton:focus {
@@ -108,7 +135,7 @@ header {
 
 .dailyOverview {
     border: 2px black solid;
-    height: 300px;
+    height: 280px;
     padding: 25px;
     
     margin-bottom: 10px;
@@ -123,10 +150,10 @@ header {
 
 #forecast {
     display: flex;
-    padding-left: 5px;
+    width: 100%;
     padding-top: 10px;
     margin-bottom: 10px;
-    width: fit-content;
+    
 }
 
 .cards {
@@ -139,16 +166,16 @@ header {
 
 
 .card {
-    text-align: left !important;
-    background-color: blue !important;
+    text-align: left;
+    background-color: blue;
     color: white;
-    margin: 10px;
+    
     margin-bottom: 0px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
     padding: 5px;
-    text-align: center;
-    background-color: #f1f1f1;
-    width: 135px;
+    
+    
+    width: 20%;
     height: 200px;
      
 }
@@ -158,7 +185,7 @@ li {
     border-bottom: 1px lightgray solid;
     height: 50px;
     line-height: 50px;
-    padding-left: 20px;
+    padding-left: 15px;
     background-color: white;
     vertical-align: middle;
     cursor: pointer;
@@ -166,13 +193,25 @@ li {
     
 }  
 
+#format-row {
+    padding: 0px 15px 0px 15px;
+}
 
 
 #allCities {
     background-color: lightgray;
+    width: 35%;
 }
 
-img {
+.currentImg {
     width: 50px;
     height: 50px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+.forecastImg {
+   
+    max-width: 80px;
+    max-height: 80px;
 }
