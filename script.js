@@ -5,7 +5,7 @@ $(document).ready(function() {
     var weatherTemp;
     var apiKey = "54ea5276d8943e943c85e5932fdd782a";
     var cities = [];
-    var today, iconID, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate, val;
+    var today, iconID, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate, val, uvTemp;
     var date, forecastIcon, temperature, humidity;
     let forecastCounter = 0;
     let forecastTags = ["#forecast-1", "#forecast-2", "#forecast-3", "#forecast-4", "#forecast-5"]
@@ -133,11 +133,14 @@ $(document).ready(function() {
         console.log(uv);
         tempDate = formatDate(uv.date_iso);
         temp = convertTemp(today.main.temp);
+        uvTemp = uv.value;
+        
         $(".city").html(`<h2>${ today.name } (${ tempDate }) <img src=${ iconID.url } /></h2>`);
         $(".temperature").html(`<p>Temperature: ${ temp } &#176;F</p>`);
         $(".humidity").html(`<p>Humidity: ${ today.main.humidity }%</p>`);
         $(".windSpeed").html(`<p>Wind Speed: ${ today.wind.speed } MPH</p>`);
-        $(".uvIndex").html(`<p>UV Index: ${ uv.value }</p>`);
+        $(".uvIndex").html(`<p>UV Index: <span id="uvColor">${ uvTemp }</span></p>`);
+        styleUV(uvTemp);
 
         for (i = 0; i < forecast.list.length - 1; i++) {
             if (forecast.list[i].dt_txt.includes("21:00:00")) {
@@ -180,8 +183,20 @@ $(document).ready(function() {
         return day+'/'+month+'/'+year;
     }
 
-    function styleUV() {
-        
+    function styleUV(value) {
+        var displayUV = $("#uvColor");
+        displayUV.removeClass("uvColor-low", "uvColor-moderate", "uvColor-high", "uvColor-very-high", "uvColor-extreme");
+        if ((value >= 0) && (value < 3)) {
+            displayUV.addClass("uvColor-low");
+        } else if ((value >= 3) && (value < 6)) {
+            displayUV.addClass("uvColor-moderate");
+        } else if ((value >= 6) && (value < 8)) {
+            displayUV.addClass("uvColor-high");
+        } else if ((value >= 8) && (value < 11)) {
+            displayUV.addClass("uvColor-very-high");
+        } else {
+            displayUV.addClass("uvColor-extreme");
+        }
     }
 
     function convertTemp (temperature) {
@@ -211,17 +226,9 @@ $(document).ready(function() {
     });
 
     $(".search-History").on("click", function(event) {
-        //city = $(".search-History").val(); 
-        
-        console.log(event);
         city = event.target.attributes[2].nodeValue;
-        //console.log(city);
-        //city = $(this);
         storeCities(city);
         generateWeatherData(city);
-        //console.log(city);
-        console.log("hey");
-        
     });
 
     

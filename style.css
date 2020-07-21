@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 header {
     height: 75px;
     line-height: 75px;
@@ -19,7 +24,7 @@ header {
     padding-right: 0px;
 }
 
-span {
+.heading {
     display: inline-block;
     height: 75px;
     vertical-align: middle;
@@ -35,12 +40,45 @@ span {
     width: 80%;
     height: 40px;
     margin-bottom: 15px;
-    margin-left: 15px
+    margin-left: 15px;
     
     
 }
+
+#uvColor {
+    color: white;
+}
+
+.uvColor-low {
+    background-color: green;
+    padding: 5px;
+}
+
+.uvColor-moderate {
+    background-color: yellow;
+    padding: 5px;
+
+}
+
+.uvColor-high {
+    background-color: orange;
+    padding: 5px;
+
+}
+
+.uvColor-very-high {
+    background-color: red;
+    padding: 5px;
+
+}
+
+.uvColor-extreme {
+    background-color: purple;
+    padding: 5px;
+}
+
+
 .searchButton {
-   
     border: 1px solid blue;
     background-color: blue !important;
     text-align: center;
@@ -50,15 +88,29 @@ span {
     
     width: 10%;
     height: 40px;
-    
+}
 
+.searchButton::before {
+    content: "";
+}
+
+.searchButton:visited {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.searchButton:focus {
+    content: " ";
+    display: block;
+    clear: both;
 }
 
 .dailyOverview {
     border: 2px black solid;
     height: 300px;
-    padding: 5px;
-    padding-left: 15px;
+    padding: 25px;
+    
     margin-bottom: 10px;
 }
 
