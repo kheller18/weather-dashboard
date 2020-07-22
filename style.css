@@ -10,7 +10,8 @@
 }
 
 body {
-    width: 100%;
+    min-width: 400px;
+    max-width: 100%;
 }
 
 header {
@@ -25,6 +26,23 @@ header {
     
 }
 
+h6 {
+    margin: 0px 0px 0px 0px;
+}
+
+li {
+    list-style-type: none;
+    border-bottom: 1px lightgray solid;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    background-color: white;
+    vertical-align: middle;
+    cursor: pointer;
+}  
+
+
+
 .headerText {
     margin: 0 auto;
     width: 100%;
@@ -32,43 +50,87 @@ header {
     background-color: black;
 }
 
-h6 {
-    margin: 0px 0px 0px 0px;
-}
-
 .container {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 100%;
+    margin-left: 0px;  
 }
 
-.heading {
-    display: inline-block;
-    height: 75px;
-    vertical-align: middle;
-    width: 100;
-    
+#allCities {
+    background-color: lightgray;
+    width: 40%;
 }
 
 .form {
-    margin-top: 10px;
     width: 100%;
 }
 
-
 #searchCity {
-    width: 85%;
+    width: 80%;
     height: 40px;
     margin-bottom: 15px;
-    
-    
-    
+    padding: 5px;
+}
+
+.searchButton {
+    border: 1px solid blue;
+    background-color: blue !important;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    width: 20%;
+    height: 40px;
+}
+
+#search-History {
+    margin-top: 15px;
+    border: 1px lightgray solid;
+}
+
+#format-row {
+    padding: 0px 15px 0px 15px;
 }
 
 #weather {
-    width: 65%;
-   
-    padding: 0px 25px 0px 25px;
+    width: 100%;
+    padding: 0px 30px 0px 30px;
+}
+
+.dailyOverview {
+    border: 1px black solid;
+    border-radius: 5px;
+    height: 300px;
+    padding: 25px;
+    line-height: 1.5;
+}
+
+.currentImg {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+
+#forecast {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.forecastImg {
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.card {
+    text-align: left;
+    background-color: blue;
+    color: white;
+    margin-bottom: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 10px 5px 10px 10px;
+    width: 18%;
 }
 
 #uvColor {
@@ -83,37 +145,21 @@ h6 {
 .uvColor-moderate {
     background-color: yellow;
     padding: 5px;
-
 }
 
 .uvColor-high {
     background-color: orange;
     padding: 5px;
-
 }
 
 .uvColor-very-high {
     background-color: red;
     padding: 5px;
-
 }
 
 .uvColor-extreme {
     background-color: purple;
     padding: 5px;
-}
-
-
-.searchButton {
-    border: 1px solid blue;
-    background-color: blue !important;
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    
-    width: 15%;
-    height: 40px;
 }
 
 .searchButton::before {
@@ -131,87 +177,4 @@ h6 {
     content: " ";
     display: block;
     clear: both;
-}
-
-.dailyOverview {
-    border: 2px black solid;
-    height: 280px;
-    padding: 25px;
-    
-    margin-bottom: 10px;
-}
-
-
-
-#search-History {
-    margin-top: 15px;
-    border: 1px lightgray solid;
-}
-
-#forecast {
-    display: flex;
-    width: 100%;
-    padding-top: 10px;
-    margin-bottom: 10px;
-    
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-auto-rows: auto;
-    grid-gap: 1rem;
-    width: 100px;
-}
-
-
-.card {
-    text-align: left;
-    background-color: blue;
-    color: white;
-    
-    margin-bottom: 0px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-    padding: 5px;
-    
-    
-    width: 20%;
-    height: 200px;
-     
-}
-
-li {
-    list-style-type: none;
-    border-bottom: 1px lightgray solid;
-    height: 50px;
-    line-height: 50px;
-    padding-left: 15px;
-    background-color: white;
-    vertical-align: middle;
-    cursor: pointer;
-    
-    
-}  
-
-#format-row {
-    padding: 0px 15px 0px 15px;
-}
-
-
-#allCities {
-    background-color: lightgray;
-    width: 35%;
-}
-
-.currentImg {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 4px;
-    line-height: 1.2;
-}
-
-.forecastImg {
-   
-    max-width: 80px;
-    max-height: 80px;
 }

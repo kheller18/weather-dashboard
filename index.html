@@ -21,18 +21,19 @@
     </header>
 
     <div class="container">
-        <div class="row mt-5">
-            <div class="col-sm-3" id="allCities">
+        <div class="row">
+            <div class="col-3" id="allCities">
+                <br>
                 <form class="form">
-                    <label for="searchCity"><b>Search for a City:</b></label>
                     <div class="row" id="format-row">
-                        <input type="text" id="searchCity" name="searchCity">
+                        <input type="textbox" id="searchCity" name="searchCity" value="Search City">
                         <button type="submit" class="searchButton"><i class="fa fa-search"></i></button>
                     </div>
                 </form>
                 <ul class=search-History></ul>
             </div>
-            <div class="col-sm-9" id="weather">
+            <div class="col-9" id="weather">
+                <br>
                 <div class="dailyOverview">
                     <div class="city"></div>
                     <div class="temperature"></div>
@@ -40,6 +41,8 @@
                     <div class="windSpeed"></div>
                     <div class="uvIndex"></div>
                 </div>
+                <br>
+                <br>
                 <h5><b>5-Day Forecast:</b></h5>
                 <div id="forecast">
                     <div class="card" id="forecast-1"></div>

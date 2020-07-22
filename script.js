@@ -48,6 +48,9 @@ $(document).ready(function() {
     // app gets kicked off here    
     displayLastCity();
     renderCities();
+    
+
+    
 
     function generateWeatherData(city) {
         if (city != null || city != undefined|| city != "") {               
@@ -118,10 +121,7 @@ $(document).ready(function() {
         forecastCounter = 0;
         console.log(cityVal)
         console.log(forecast)
-      
         tempDate = forecast.current.dt;
-        
-
         tempDate = formatDate(tempDate);
         temp = forecast.current.temp;
         temp = convertTemp(temp);
@@ -149,8 +149,6 @@ $(document).ready(function() {
             $(forecastTags[forecastCounter]).append(`<p>Temp: ${ forecastData[forecastCounter].temperature } &#176;F</p>`);
             $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
             forecastCounter++;
-            
-        
         }
         console.log(forecastData);
         console.log(forecast);
@@ -210,18 +208,34 @@ $(document).ready(function() {
             storeCities(city);
             generateWeatherData(city);
         } else {
-            console.log("didn't work")
+            return;
         }
     }
 
-    $("form").submit(function(e) {
-        e.preventDefault();
+    
+    $("form").submit(function(event) {
+        event.preventDefault();
         city = $("#searchCity").val();
         validateCity(city);
     });
 
+    $("#searchCity").on("click", function(event) {
+       // console.log(event)
+       // if (event.target.id == "searchCity") {
+        $("#searchCity").val("");
+       // } else if (event.target.className == "fa fa-search") {
+            return;
+      //  } else {
+        //    $("#searchCity").val("Search City");
+       // }
+    })
+
+    
+
     $(".search-History").on("click", function(event) {
         city = event.target.attributes[2].nodeValue;
+        console.log(city);
+        $("#searchCity").val(city);
         storeCities(city);
         generateWeatherData(city);
     });
