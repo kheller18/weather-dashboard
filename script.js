@@ -43,10 +43,6 @@ $(document).ready(function() {
             humidity
         }
     ]   
-    
-    // app gets kicked off here 
-    displayLastCity();
-    renderCities();
 
     // retrieves data from the api 
     function generateWeatherData(city) {
@@ -236,4 +232,8 @@ $(document).ready(function() {
         storeCities(city);
         generateWeatherData(city);
     });
+
+    // app gets kicked off here 
+    displayLastCity();
+    renderCities();
 });
