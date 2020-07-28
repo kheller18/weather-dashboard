@@ -44,7 +44,6 @@ $(document).ready(function() {
         }
     ]   
         
-    
     // retrieves data from the api 
     function generateWeatherData(city) {
         if (city != null || city != undefined|| city != "") {               
@@ -208,6 +207,10 @@ $(document).ready(function() {
         }
     }
 
+    // app gets kicked off here 
+    displayLastCity();
+    renderCities();
+
     // event listener for form submission
     $("form").submit(function(event) {
         event.preventDefault();
@@ -233,9 +236,4 @@ $(document).ready(function() {
         storeCities(city);
         generateWeatherData(city);
     });
-
-    // app gets kicked off here 
-    displayLastCity();
-    renderCities();
-
 });
