@@ -6,6 +6,6 @@ Forecast:  The forecast is displayed for the following 5 days.  The temperature 
 
 Additional details:  The user's searches appear on the left side of the screen.  When the user closes and reopens the application, the last city the user searched for appears on the home page.
 
-Link to the app: 
+Link to the app: "https://kheller18.github.io/weather-dashboard/"
 
-Screenshot: 
+Screenshot: "weather-dashboard-front-page.png"
