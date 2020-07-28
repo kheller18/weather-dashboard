@@ -43,7 +43,11 @@ $(document).ready(function() {
             humidity
         }
     ]   
-        
+    
+    // app gets kicked off here 
+    displayLastCity();
+    renderCities();
+
     // retrieves data from the api 
     function generateWeatherData(city) {
         if (city != null || city != undefined|| city != "") {               
@@ -206,10 +210,6 @@ $(document).ready(function() {
             $(".modal").css("display", "block");
         }
     }
-
-    // app gets kicked off here 
-    displayLastCity();
-    renderCities();
 
     // event listener for form submission
     $("form").submit(function(event) {
