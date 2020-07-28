@@ -14,12 +14,21 @@
     />
     <link rel="stylesheet" href="style.css">
     
+    
 </head>
 <body>
     <header>
         <div class="headerText">Weather Dashboard</div>
     </header>
 
+    <div id="myModal" class="modal">
+        <br>
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>City could not be found.</p>
+        </div>
+    </div>
+        
     <div class="container">
         <div class="row">
             <div class="col-3" id="allCities">
@@ -44,6 +53,7 @@
                 <br>
                 <br>
                 <h5><b>5-Day Forecast:</b></h5>
+                <div id="map"></div>
                 <div id="forecast">
                     <div class="card" id="forecast-1"></div>
                     <div class="card" id="forecast-2"></div>
@@ -53,12 +63,10 @@
                 </div>  
             </div>
         </div>
-        
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maps.alk.com/api/1.2/alkmaps.js"></script>
     <script src="script.js"></script>
-
-
 </body>
 </html>

@@ -7,9 +7,8 @@ $(document).ready(function() {
     var weatherTemp;
     var apiKey = "54ea5276d8943e943c85e5932fdd782a";
     var cities = [];
-    var today, iconID, uv, forecast, temp, lat, long, weatherTemp, lastCity, tempDate, uvTemp;
+    var forecast, temp, lat, long, weatherTemp, lastCity, tempDate, uvTemp;
     var date, forecastIcon, temperature, humidity;
-    var currDate;
     let forecastCounter = 0;
     let forecastTags = ["#forecast-1", "#forecast-2", "#forecast-3", "#forecast-4", "#forecast-5"]
     let forecastData = [
@@ -45,13 +44,8 @@ $(document).ready(function() {
         }
     ]   
         
-    // app gets kicked off here    
-    displayLastCity();
-    renderCities();
     
-
-    
-
+    // retrieves data from the api 
     function generateWeatherData(city) {
         if (city != null || city != undefined|| city != "") {               
             fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
@@ -70,15 +64,13 @@ $(document).ready(function() {
                     getForecast(cityVal, forecast);
                     renderCities();
                 }).catch(function (error) {
-                    console.log(error);
                 });  
         }
     }
     
-    
+    // displays past cities searched for
     function renderCities() {
         $(".search-History").empty();
-
         if (JSON.parse(localStorage.getItem("cities")) != null) {
             cities = JSON.parse(localStorage.getItem("cities"));
         }
@@ -92,12 +84,14 @@ $(document).ready(function() {
         }
     }
 
+    // changes the first letter of a city to uppercase
     function cityUpperCase(city) {
         return city.replace(/\w\S*/g, function(txt){
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         });
     }
 
+    // stores the cities a user has searched for
     function storeCities(city) {
         console.log(city)
         city = cityUpperCase(city);
@@ -109,18 +103,21 @@ $(document).ready(function() {
         renderCities();
     }
 
+    // displays last city searched for or default value
     function displayLastCity() {
         if (JSON.parse(localStorage.getItem("cities")) != null) {
             cities = JSON.parse(localStorage.getItem("cities"));
             lastCity = cities[cities.length - 1];
             generateWeatherData(lastCity);
         }
+        else {
+            generateWeatherData("Seattle");
+        }
     }
 
+    // gets the forecast for a user selected city
     function getForecast (cityVal, forecast) {
         forecastCounter = 0;
-        console.log(cityVal)
-        console.log(forecast)
         tempDate = forecast.current.dt;
         tempDate = formatDate(tempDate);
         temp = forecast.current.temp;
@@ -137,9 +134,7 @@ $(document).ready(function() {
         styleUV(uvTemp);
 
         for (i = 1; i < forecast.daily.length - 2; i++) {
-            
             sdate = forecast.daily[i].dt;
-            console.log(sdate);
             forecastData[forecastCounter].date = formatDate(forecast.daily[i].dt);
             forecastData[forecastCounter].forecastIcon = getIcon(forecast.daily[i].weather[0].icon);
             forecastData[forecastCounter].temperature = convertTemp(forecast.daily[i].temp.max);
@@ -150,15 +145,15 @@ $(document).ready(function() {
             $(forecastTags[forecastCounter]).append(`<p>Humidity: ${ forecastData[forecastCounter].humidity }%</p>`);
             forecastCounter++;
         }
-        console.log(forecastData);
-        console.log(forecast);
     }
 
+    // gets the url for the icon according to weather 
     function getIcon(iconSymbol) {
         url = `http://openweathermap.org/img/wn/${ iconSymbol }@2x.png`;
         return url;
     }
 
+    // formats date from milliseconds to now
     function formatDate(tempDate) {
         tempDate = (new Date(tempDate * 1000)).toLocaleString();
         tempDate = tempDate.split(",");
@@ -166,6 +161,7 @@ $(document).ready(function() {
         return tempDate;
     }
 
+    // sets the background color of the UV value based on conditions
     function styleUV(value) {
         var displayUV = $("#uvColor");
         displayUV.removeClass("uvColor-low", "uvColor-moderate", "uvColor-high", "uvColor-very-high", "uvColor-extreme");
@@ -182,11 +178,13 @@ $(document).ready(function() {
         }
     }
 
+    // converts temperature from K to F
     function convertTemp (temperature) {
         temperature = (((temperature - 273.15) * 1.8) + 32).toFixed(0);
         return temperature;
     }
 
+    // function to be added later
     function convertUTCToLocal(utcDate) {
         console.log(utcDate);
         var newDate = new Date(utcDate.getTime()+utcDate.getTimezoneOffset()*60*1000);
@@ -195,65 +193,49 @@ $(document).ready(function() {
         var hours = utcDate.getHours();
 
         newDate.setHours(hours - offset);
-        console.log(newDate);
         return newDate;
     }
-
+    
+    // validates that user typed in a city
     async function validateCity(location) {
         const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ location }&appid=${ apiKey }`)
         const data = await response.json()
-        console.log(data);
-        console.log(data.cod)
         if (data.cod == "200") {
             storeCities(city);
             generateWeatherData(city);
         } else {
-            return;
+            $(".modal").css("display", "block");
         }
     }
 
-    
+    // event listener for form submission
     $("form").submit(function(event) {
         event.preventDefault();
         city = $("#searchCity").val();
         validateCity(city);
     });
 
+    // event listener for clicking in text box
     $("#searchCity").on("click", function(event) {
-       // console.log(event)
-       // if (event.target.id == "searchCity") {
         $("#searchCity").val("");
-       // } else if (event.target.className == "fa fa-search") {
             return;
-      //  } else {
-        //    $("#searchCity").val("Search City");
-       // }
     })
 
-    
+    // event listener to close modal if city isn't true
+    $(".close").on("click", function() {
+        $(".modal").css("display", "none");
+    });
 
+    // displays prior searches
     $(".search-History").on("click", function(event) {
         city = event.target.attributes[2].nodeValue;
-        console.log(city);
         $("#searchCity").val(city);
         storeCities(city);
         generateWeatherData(city);
     });
 
-    
-   /* async function fetchCity(city) {
-        const response = await fetch("http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=54ea5276d8943e943c85e5932fdd782a")
-        const data = await response.json()
-        return data;
-    }
-        
-    async function fetchImg(wpic) {
-        const response = await fetch("http://openweathermap.org/img/wn/" + wpic + "@2x.png")
-        const data = await response
-        return data;
-     } */
-                    
-       
-    
+    // app gets kicked off here 
+    displayLastCity();
+    renderCities();
 
 });
