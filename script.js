@@ -51,7 +51,7 @@ $(document).ready(function() {
     // retrieves data from the api 
     function generateWeatherData(city) {
         if (city != null || city != undefined|| city != "") {               
-            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
                 .then(function (response) {
                     return response.json();
                 }).then(function (data) {
@@ -152,7 +152,7 @@ $(document).ready(function() {
 
     // gets the url for the icon according to weather 
     function getIcon(iconSymbol) {
-        url = `http://openweathermap.org/img/wn/${ iconSymbol }@2x.png`;
+        url = `https://openweathermap.org/img/wn/${ iconSymbol }@2x.png`;
         return url;
     }
 
@@ -201,7 +201,7 @@ $(document).ready(function() {
     
     // validates that user typed in a city
     async function validateCity(location) {
-        const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${ location }&appid=${ apiKey }`)
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ location }&appid=${ apiKey }`)
         const data = await response.json()
         if (data.cod == "200") {
             storeCities(city);
