@@ -1,14 +1,8 @@
 // making sure html is loaded first
 $(document).ready(function() {
-    var city;
-    var cityVal;
-    var temp;
-    var iconURL;
-    var weatherTemp;
-    var apiKey = "54ea5276d8943e943c85e5932fdd782a";
-    var cities = [];
-    var forecast, temp, lat, long, weatherTemp, lastCity, tempDate, uvTemp;
-    var date, forecastIcon, temperature, humidity;
+    let city, cityVal, temp, iconURL, weatherTemp, forecast, lat, long, lastCity, tempDate, uvTemp, date, forecastIcon, temperature, humidity;
+    let apiKey = "54ea5276d8943e943c85e5932fdd782a";
+    let cities = [];
     let forecastCounter = 0;
     let forecastTags = ["#forecast-1", "#forecast-2", "#forecast-3", "#forecast-4", "#forecast-5"]
     let forecastData = [
@@ -17,36 +11,36 @@ $(document).ready(function() {
             forecastIcon,
             temperature,
             humidity
-        }, 
+        },
         {
             date,
             forecastIcon,
             temperature,
             humidity
-        }, 
+        },
         {
             date,
             forecastIcon,
             temperature,
             humidity
-        }, 
+        },
         {
             date,
             forecastIcon,
             temperature,
             humidity
-        }, 
+        },
         {
             date,
             forecastIcon,
             temperature,
             humidity
         }
-    ]   
+    ]
 
-    // retrieves data from the api 
+    // retrieves data from the api
     function generateWeatherData(city) {
-        if (city != null || city != undefined|| city != "") {               
+        if (city != null || city != undefined|| city != "") {
             fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
                 .then(function (response) {
                     return response.json();
@@ -63,10 +57,10 @@ $(document).ready(function() {
                     getForecast(cityVal, forecast);
                     renderCities();
                 }).catch(function (error) {
-                });  
+                });
         }
     }
-    
+
     // displays past cities searched for
     function renderCities() {
         $(".search-History").empty();
@@ -123,7 +117,7 @@ $(document).ready(function() {
         uvTemp = forecast.current.uvi;
         iconURL = forecast.current.weather[0].icon;
         iconURL = getIcon(iconURL)
-        
+
         $(".city").html(`<h3>${ cityVal.name } (${ tempDate })<img src=${ iconURL } class="currentImg"/></h3>`);
         $(".temperature").html(`<p>Temperature: ${ temp } &#176;F</p>`);
         $(".humidity").html(`<p>Humidity: ${ forecast.current.humidity }%</p>`);
@@ -193,7 +187,7 @@ $(document).ready(function() {
         newDate.setHours(hours - offset);
         return newDate;
     }
-    
+
     // validates that user typed in a city
     async function validateCity(location) {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ location }&appid=${ apiKey }`)

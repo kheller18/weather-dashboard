@@ -19,11 +19,8 @@ header {
     line-height: 75px;
     background-color: black;
     color: white;
-    
-    
     font-weight: bold;
     font-size: 30px;
-    
 }
 
 h6 {
@@ -39,9 +36,7 @@ li {
     background-color: white;
     vertical-align: middle;
     cursor: pointer;
-}  
-
-
+}
 
 .headerText {
     margin: 0 auto;
@@ -51,7 +46,7 @@ li {
 }
 
 .container {
-    margin-left: 0px;  
+    margin-left: 0px;
 }
 
 #allCities {
@@ -191,7 +186,7 @@ li {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(233, 39, 39, 0.4); /* Black w/ opacity */
 }
-  
+
   /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
@@ -200,16 +195,14 @@ li {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
-  
+
   /* The Close Button */
 .close {
     color: #aaa;
-    
-    
     font-size: 28px;
     font-weight: bold;
 }
-  
+
 .close:hover,
 .close:focus {
     color: black;
