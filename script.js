@@ -92,7 +92,6 @@ $(document).ready(function() {
 
     // stores the cities a user has searched for
     function storeCities(city) {
-        console.log(city)
         city = cityUpperCase(city);
         if (JSON.parse(localStorage.getItem("cities")) != null) {
             cities = JSON.parse(localStorage.getItem("cities"));
@@ -115,7 +114,7 @@ $(document).ready(function() {
     }
 
     // gets the forecast for a user selected city
-    function getForecast (cityVal, forecast) {
+    function getForecast(cityVal, forecast) {
         forecastCounter = 0;
         tempDate = forecast.current.dt;
         tempDate = formatDate(tempDate);
