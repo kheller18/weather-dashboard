@@ -81,6 +81,6 @@
 ## 7. Questions
 
   + [GitHub Profile](https://github.com/kheller18)
-  + [LinkedIn] (https://www.linkedin.com/in/keenanheller/)
+  + [LinkedIn](https://www.linkedin.com/in/keenanheller/)
   + Email: keenanaheller@gmail.com
     + Please feel free to contact me at the email address provided above.  I will be happy to answer any questions.  Feedback is gladly welcomed and appreciated!
