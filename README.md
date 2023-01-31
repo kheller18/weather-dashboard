@@ -1,8 +1,6 @@
 # Weather Application
 
-![license badge](
-      https://img.shields.io/badge/license-Unlicense-blue
-      )
+![license badge](https://img.shields.io/badge/license-Unlicense-blue)
 
 
 ## Description
