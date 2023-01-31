@@ -40,41 +40,41 @@ $(document).ready(function() {
 
     // retrieves data from the api
     function generateWeatherData(city) {
-        if (city != null || city != undefined|| city != "") {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
-                .then(function (response) {
-                    return response.json();
-                }).then(function (data) {
-                    cityVal = data;
-                    weatherTemp = data.weather[0].icon;
-                    lat =  data.coord.lat;
-                    long = data.coord.lon;
-                    return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${ lat }&lon=${ long }&exclude=minutely&appid=${ apiKey }`)
-                }).then(function (response) {
-                    return response.json()
-                }).then(function (data) {
-                    forecast = data;
-                    getForecast(cityVal, forecast);
-                    renderCities();
-                }).catch(function (error) {
-                });
-        }
+      if (city != null || city != undefined|| city != "") {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ city }&appid=${ apiKey }`)
+          .then(function (response) {
+              return response.json();
+          }).then(function (data) {
+              cityVal = data;
+              weatherTemp = data.weather[0].icon;
+              lat =  data.coord.lat;
+              long = data.coord.lon;
+              return fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${ lat }&lon=${ long }&exclude=minutely&appid=${ apiKey }`)
+          }).then(function (response) {
+              return response.json()
+          }).then(function (data) {
+              forecast = data;
+              getForecast(cityVal, forecast);
+              renderCities();
+          }).catch(function (error) {
+        });
+      }
     }
 
     // displays past cities searched for
     function renderCities() {
-        $(".search-History").empty();
-        if (JSON.parse(localStorage.getItem("cities")) != null) {
-            cities = JSON.parse(localStorage.getItem("cities"));
-        }
-        for (var i = cities.length - 1; i >= 0; i--) {
-            var li = $("<li>");
-            li.addClass("priorSearches");
-            li.attr('id', i);
-            li.attr('value', cities[i]);
-            li.text(cities[i])
-            $(".search-History").append(li);
-        }
+      $(".search-History").empty();
+      if (JSON.parse(localStorage.getItem("cities")) != null) {
+          cities = JSON.parse(localStorage.getItem("cities"));
+      }
+      for (var i = cities.length - 1; i >= 0; i--) {
+          var li = $("<li>");
+          li.addClass("priorSearches");
+          li.attr('id', i);
+          li.attr('value', cities[i]);
+          li.text(cities[i])
+          $(".search-History").append(li);
+      }
     }
 
     // changes the first letter of a city to uppercase
@@ -139,7 +139,7 @@ $(document).ready(function() {
         }
     }
 
-    // gets the url for the icon according to weather 
+    // gets the url for the icon according to weather
     function getIcon(iconSymbol) {
         url = `https://openweathermap.org/img/wn/${ iconSymbol }@2x.png`;
         return url;
