@@ -226,7 +226,7 @@ $(document).ready(function() {
         generateWeatherData(city);
     });
 
-    // app gets kicked off here 
+    // app gets kicked off here
     displayLastCity();
     renderCities();
 });
